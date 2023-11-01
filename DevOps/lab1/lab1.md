@@ -1,0 +1,30 @@
+## Лабораторная работа №1
+
+### Основное задание
+
+#### Текст задачи
+
+Пользуясь терминалом на компьютере А перенести файл с компьютера Б на компьютер С, находящиеся в одной локальной сети.
+
+#### Ход работы
+
+1. Сначала создал файл meow.text на локальном MacOS, используя комаду nano.
+   ![meow.png](static%2Fmeow.png)
+2. Затем создал две виртуальные машины на Ubuntu.
+
+| Название хоста                                                  | ОС     |
+|-----------------------------------------------------------------|--------|
+| kirillprivalov@Kirills-MacBook-Air-2                            | MacOS  |
+| kirill-ubuntu-one@kirillubuntuone-Parallels-ARM-Virtual-Machine | Ubuntu |
+| ubuntu-kirill-two@ubuntukirilltwo-Parallels-ARM-Virtual-Machine | Ubuntu |
+
+3. С помощью команды ssh подключился с виртуальной машины к MacOS, чтобы с помощью команды scp перенести файл meow.text
+   с MacOS на Ubuntu №1.
+   ![meow1.png](static%2Fmeow1.png)
+4. Подключившись со второй виртуальной машины к первой, с помощью команды scp удалось перенести файл meow.text с Ubuntu
+   №1 на Ubuntu №2.
+   ![meow2.png](static%2Fmeow2.png)
+
+#### Вывод
+
+Мне удалось перенести файл meow.text с нескольких хостов с помощью команд ssh и scp, используя логин и пароль.
