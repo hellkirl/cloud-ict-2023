@@ -2,24 +2,29 @@ name: Lab 3
 
 on:
   push:
-    paths:
-      - 'DevOps/lab3/files/**'
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v2
-      - name: Set up Python 3.12
-        uses: actions/setup-python@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t lab3 .
+
+      - name: Save Docker image
+        run: |
+          docker save lab3 -o lab3.tar
+          mv lab3.tar $GITHUB_WORKSPACE/lab3.tar
+          echo "::set-output name=DevOps/lab3/::$GITHUB_WORKSPACE/lab3.tar"
+        id: save
+
+      - name: Upload Docker image artifact
+        uses: actions/upload-artifact@v2
         with:
-          python-version: '3.12'
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-      - name: Install project dependencies
-        run: |
-          pip install -r DevOps/lab3/requirements.txt
-      - name: Run script
-        run: |
-          python DevOps/lab3/main.py
+          name: docker-image
+          path: ${{ steps.save.outputs.image_path }}
