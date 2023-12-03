@@ -13,7 +13,7 @@ try:
     link = re.search(r'(\w+\.\w+)', data['link']).group(0)
 
     filename = (
-        f'/app/reports/{datetime.now().strftime("%d.%m.%Y")}-{datetime.now().timestamp()}-{link}.json'
+        f'reports/{datetime.now().strftime("%d.%m.%Y")}-{datetime.now().timestamp()}-{link}.json'
     )
 
     with open(

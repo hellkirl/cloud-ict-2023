@@ -19,8 +19,13 @@ jobs:
       - name: Run main.py script in Docker container
         run: docker run -v $(pwd)/reports:/app/reports lab3 python /app/main.py
 
-      - name: Upload main.py result artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: main-result
-          path: DevOps/lab3/reports
+      - name: Commit and push changes
+        run: |
+            cd /app/reports
+          
+            git config --global user.email "actions@github.com"
+            git config --global user.name "GitHub Actions"
+            
+            git add *
+            git commit -m "Add new report" || true
+            git push
