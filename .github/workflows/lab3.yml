@@ -1,4 +1,4 @@
-name: Docker Build
+name: Docker Build and Main Script
 
 on:
   push:
@@ -19,10 +19,11 @@ jobs:
           context: .
           file: ./DevOps/lab3/Dockerfile
           push: false
+        id: build
 
       - name: Save Docker image
         run: |
-          docker save lab3 -o lab3.tar
+          docker save ${{ steps.build.outputs.image }} -o lab3.tar
           mv lab3.tar $GITHUB_WORKSPACE/lab3.tar
           echo "::set-output name=image_path::$GITHUB_WORKSPACE/lab3.tar"
         id: save
@@ -35,7 +36,7 @@ jobs:
 
       - name: Run main.py script
         run: |
-          docker run -v $(pwd)/DevOps/lab3/reports:/app/DevOps/lab3/reports lab3 python DevOps/lab3/main.py
+          docker run -v $(pwd)/DevOps/lab3/reports:/app/DevOps/lab3/reports ${{ steps.build.outputs.image }} python DevOps/lab3/main.py
 
       - name: Upload main.py result artifact
         uses: actions/upload-artifact@v2
