@@ -13,7 +13,7 @@ try:
     link = re.search(r'(\w+\.\w+)', data['link']).group(0)
 
     filename = (
-        f'/app/reports/{datetime.now().strftime("%d.%m.%Y-%H:%M:%S")}-{link}.json'
+        f'/app/reports/{datetime.now().strftime("%d.%m.%Y")}-{datetime.now().timestamp()}-{link}.json'
     )
 
     with open(
@@ -28,5 +28,5 @@ try:
         )
         json.dump(d, t, ensure_ascii=False, indent=2)
 except Exception as err:
-    with open(f'{err}-{datetime.now().strftime("%d.%m.%Y-%H:%M:%S")}.json', 'a', encoding='utf-8'):
+    with open(f'{err}-{datetime.now().strftime("%d.%m.%Y")}-{datetime.now().timestamp()}-.json', 'a', encoding='utf-8'):
         d = dict(error=str(err), datetime=datetime.now().strftime("%d.%m.%Y-%H:%M:%S"))
