@@ -3,7 +3,7 @@ name: Docker Build and Main Script
 on:
   push:
     paths:
-      - 'DevOps/lab3/files/**'
+      - 'DevOps/lab3/**'
 
 jobs:
   run-script:
@@ -19,7 +19,7 @@ jobs:
         run: docker run --name lab3_container lab3
 
       - name: Copy generated file
-        run: docker cp lab3_container:/app/reports/output.json $GITHUB_WORKSPACE/DevOps/lab3/reports
+        run: docker cp lab3_container:/app/output.json $GITHUB_WORKSPACE/DevOps/lab3/reports
 
       - name: Commit and push changes
         run: |

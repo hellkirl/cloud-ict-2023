@@ -3,17 +3,15 @@ import requests
 from datetime import datetime
 
 try:
-    with open('files/main.json', 'r', encoding='utf-8') as f:
+    with open('main.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
         if data['link']:
             response = requests.get(data['link'])
 
-    filename = f'reports/output.json'
-
     with open(
-        filename,
-        'a',
-        encoding='utf-8',
+            'output.json',
+            'a',
+            encoding='utf-8',
     ) as t:
         d = dict(
             url=response.url,
