@@ -1,12 +1,12 @@
-name: Lab 3
+name: Docker Build
 
 on:
   push:
-    branches:
-      - main
+    paths:
+      - 'DevOps/lab3/files/**'
 
 jobs:
-  build:
+  build_and_run:
     runs-on: ubuntu-latest
 
     steps:
@@ -14,13 +14,17 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Docker image
-        run: docker build -t lab3 .
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          file: ./DevOps/lab3/Dockerfile
+          push: false
 
       - name: Save Docker image
         run: |
           docker save lab3 -o lab3.tar
           mv lab3.tar $GITHUB_WORKSPACE/lab3.tar
-          echo "::set-output name=DevOps/lab3/::$GITHUB_WORKSPACE/lab3.tar"
+          echo "::set-output name=image_path::$GITHUB_WORKSPACE/lab3.tar"
         id: save
 
       - name: Upload Docker image artifact
@@ -28,3 +32,13 @@ jobs:
         with:
           name: docker-image
           path: ${{ steps.save.outputs.image_path }}
+
+      - name: Run main.py script
+        run: |
+          docker run -v $(pwd)/DevOps/lab3/reports:/app/DevOps/lab3/reports lab3 python DevOps/lab3/main.py
+
+      - name: Upload main.py result artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: main-result
+          path: DevOps/lab3/reports
