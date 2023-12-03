@@ -18,7 +18,7 @@ jobs:
 
       - name: Run main.py script in Docker container
         run: |
-          docker run -v $(pwd)/DevOps/lab3/reports:/app/DevOps/lab3/reports lab3 python DevOps/lab3/main.py
+          docker run -v $DevOps/lab3/reports:/app/reports lab3 python /app/main.py
 
       - name: Upload main.py result artifact
         uses: actions/upload-artifact@v2
