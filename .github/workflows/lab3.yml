@@ -19,12 +19,12 @@ jobs:
         run: docker run --name lab3_container lab3
 
       - name: Copy generated file
-        run: docker cp lab3_container:/app/output.json $GITHUB_WORKSPACE/DevOps/lab3/reports
+        run: docker cp lab3_container:/app/output.json $GITHUB_WORKSPACE/DevOps/lab3/
 
       - name: Commit and push changes
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
-          git add DevOps/lab3/reports/output.json
+          git add DevOps/lab3/output.json
           git commit -m "Add output.json"
           git push
